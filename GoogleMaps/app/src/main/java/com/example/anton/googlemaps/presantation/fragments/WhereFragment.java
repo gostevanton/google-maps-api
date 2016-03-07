@@ -1,6 +1,7 @@
 package com.example.anton.googlemaps.presantation.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import com.example.anton.googlemaps.R;
 import com.example.anton.googlemaps.domain.adapters.AutoCompleteAdapter;
+import com.example.anton.googlemaps.domain.interfaces.FabProvider;
+import com.example.anton.googlemaps.presantation.activities.MapActivity;
 import com.example.anton.googlemaps.presantation.presenters.WhereFragmentPresenter;
 import com.example.anton.googlemaps.presantation.presenters.WhereFragmentPresenterImpl;
 import com.example.anton.googlemaps.presantation.view.WhereView;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,7 +24,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
  * Created by Anton on 07.03.2016.
@@ -46,6 +44,13 @@ public class WhereFragment extends Fragment implements WhereView{
         whereFragmentPresenter = new WhereFragmentPresenterImpl(this);
         createMapView();
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setOnClickListenerFab();
     }
 
     private void createMapView() {
@@ -74,5 +79,15 @@ public class WhereFragment extends Fragment implements WhereView{
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             googleMap.animateCamera(cameraUpdate);
         }
+    }
+
+    private void setOnClickListenerFab() {
+        ((FabProvider) getActivity()).getFloatingActionButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
