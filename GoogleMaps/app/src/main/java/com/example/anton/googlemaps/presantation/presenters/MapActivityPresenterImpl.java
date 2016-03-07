@@ -3,6 +3,7 @@ package com.example.anton.googlemaps.presantation.presenters;
 import android.util.Log;
 
 import com.example.anton.googlemaps.data.RequestMaker;
+import com.example.anton.googlemaps.domain.Points;
 import com.example.anton.googlemaps.domain.events.GetRouteResponse;
 import com.example.anton.googlemaps.presantation.view.MapView;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,7 +36,7 @@ public class MapActivityPresenterImpl implements MapActivityPresenter {
         asyncExecutor.execute(new AsyncExecutor.RunnableEx() {
             @Override
             public void run() throws Exception {
-                new RequestMaker().getRouteResponse(new LatLng(57, 37), new LatLng(57, 36));
+                new RequestMaker().getRouteResponse(Points.getInstance().getFromCoordinates(), new LatLng(57, 36));
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.anton.googlemaps.presantation.presenters;
 
+import com.example.anton.googlemaps.domain.adapters.AutoCompleteAdapter;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -7,4 +8,6 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public interface FromFragmentPresenter {
     void moveToFirstPosition();
+
+    void setFromCoordinates(int position, AutoCompleteAdapter adapter);
 }

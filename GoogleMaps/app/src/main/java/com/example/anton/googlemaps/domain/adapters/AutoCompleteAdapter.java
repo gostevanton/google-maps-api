@@ -135,4 +135,8 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
         Toast.makeText(getContext(), "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
                 Toast.LENGTH_SHORT).show();
     }
+
+    public GoogleApiClient getGoogleApiClient() {
+        return mGoogleApiClient;
+    }
 }
