@@ -1,5 +1,6 @@
 package com.example.anton.googlemaps.presantation.activities;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,21 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.anton.googlemaps.R;
+import com.example.anton.googlemaps.domain.interfaces.FabProvider;
 import com.example.anton.googlemaps.presantation.fragments.FromFragment;
 import com.example.anton.googlemaps.presantation.fragments.WhereFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements FabProvider {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViewPager();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
     private void initViewPager() {
@@ -38,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new FromFragment(), "From");
         adapter.addFragment(new WhereFragment(), "Where");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public FloatingActionButton getFloatingActionButton() {
+        return fab;
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
