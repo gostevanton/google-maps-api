@@ -15,4 +15,6 @@ public interface MapView {
     void moveCamera(LatLngBounds latLngBounds);
 
     void addMarker(LatLng latLng, String title);
+
+    void setText(String string);
 }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.example.anton.googlemaps.R;
 import com.example.anton.googlemaps.presantation.presenters.MapActivityPresenter;
@@ -27,13 +28,14 @@ import java.util.List;
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, MapView {
     private MapActivityPresenter mapActivityPresenter;
     private GoogleMap googleMap;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         mapActivityPresenter = new MapActivityPresenterImpl(this);
-
+        textView = (TextView) findViewById(R.id.textView);
     }
 
     @Override
@@ -76,5 +78,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     .position(latLng)
                     .title(title));
         }
+    }
+
+    @Override
+    public void setText(String string) {
+        textView.setText(string);
     }
 }

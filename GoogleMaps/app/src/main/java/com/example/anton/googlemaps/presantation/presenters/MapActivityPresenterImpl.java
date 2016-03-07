@@ -62,8 +62,9 @@ public class MapActivityPresenterImpl implements MapActivityPresenter {
         if (response.routeResponse.getPoints() != null) {
             paintDirection(response);
             moveCamera();
+            mapView.setText("Found");
         } else {
-            Log.d("My App", "Error");
+            mapView.setText("Unknown");
         }
     }
 
