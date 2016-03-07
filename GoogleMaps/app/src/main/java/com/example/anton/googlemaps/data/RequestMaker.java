@@ -1,6 +1,9 @@
 package com.example.anton.googlemaps.data;
 
+import com.example.anton.googlemaps.domain.events.GetRouteResponse;
 import com.google.android.gms.maps.model.LatLng;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,5 +25,6 @@ public class RequestMaker {
         params.put("sensor", "false");
         params.put("language", "ru");
         RouteResponse routeResponse = routeService.getRoute(params);
+        EventBus.getDefault().postSticky(new GetRouteResponse(routeResponse));
     }
 }
