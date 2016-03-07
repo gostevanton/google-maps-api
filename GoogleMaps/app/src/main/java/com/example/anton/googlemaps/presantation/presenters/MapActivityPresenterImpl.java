@@ -36,7 +36,7 @@ public class MapActivityPresenterImpl implements MapActivityPresenter {
         asyncExecutor.execute(new AsyncExecutor.RunnableEx() {
             @Override
             public void run() throws Exception {
-                new RequestMaker().getRouteResponse(Points.getInstance().getFromCoordinates(), new LatLng(57, 36));
+                new RequestMaker().getRouteResponse(Points.getInstance().getFromCoordinates(), Points.getInstance().getToCoordinates());
             }
         });
     }

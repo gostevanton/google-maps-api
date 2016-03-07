@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import com.example.anton.googlemaps.R;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Anton on 07.03.2016.
@@ -41,6 +43,12 @@ public class WhereFragment extends Fragment implements WhereView{
         adapter = new AutoCompleteAdapter(getContext(), 1, null);
         autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.auto_complete_tv_where);
         autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                whereFragmentPresenter.setWhereCoordinates(position, adapter);
+            }
+        });
         whereFragmentPresenter = new WhereFragmentPresenterImpl(this);
         createMapView();
         return view;
@@ -78,6 +86,16 @@ public class WhereFragment extends Fragment implements WhereView{
                     .build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             googleMap.animateCamera(cameraUpdate);
+        }
+    }
+
+    @Override
+    public void addMarker(LatLng latLng) {
+        if (googleMap != null) {
+            moveToPosition(latLng,15);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("Marker"));
         }
     }
 

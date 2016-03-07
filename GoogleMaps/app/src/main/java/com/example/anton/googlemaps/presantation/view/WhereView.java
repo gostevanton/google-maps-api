@@ -7,4 +7,6 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public interface WhereView {
     void moveToPosition(LatLng latLng, int zoom);
+
+    void addMarker(LatLng latLng);
 }
