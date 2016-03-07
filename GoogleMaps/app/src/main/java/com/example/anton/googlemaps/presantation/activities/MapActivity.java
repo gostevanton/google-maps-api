@@ -33,6 +33,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         mapActivityPresenter = new MapActivityPresenterImpl(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         createMap();
     }
 
@@ -48,32 +54,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         mapActivityPresenter.searchDirection();
+        mapActivityPresenter.getMyLocation(this);
     }
 
     @Override
-    public void direction(List<LatLng> points) {
-        PolylineOptions line = new PolylineOptions();
-        line.width(4f).color(Color.BLACK);
-        LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
-        for (int i = 0; i < points.size(); i++) {
-            if (i == 0) {
-                MarkerOptions startMarkerOptions = new MarkerOptions()
-                        .position(points.get(i))
-                        .title("Отсюда");
-                googleMap.addMarker(startMarkerOptions);
-            } else if (i == points.size() - 1) {
-                MarkerOptions endMarkerOptions = new MarkerOptions()
-                        .position(points.get(i))
-                        .title("Сюда");
-                googleMap.addMarker(endMarkerOptions);
-            }
-            line.add(points.get(i));
-            latLngBuilder.include(points.get(i));
-        }
+    public void paintDirection(PolylineOptions line) {
         googleMap.addPolyline(line);
+    }
+
+    @Override
+    public void moveCamera(LatLngBounds latLngBounds) {
         int size = getResources().getDisplayMetrics().widthPixels;
-        LatLngBounds latLngBounds = latLngBuilder.build();
         CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, size, size, 50);
         googleMap.moveCamera(track);
+    }
+
+    @Override
+    public void addMarker(LatLng latLng, String title) {
+        if (googleMap != null) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(title));
+        }
     }
 }
