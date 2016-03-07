@@ -38,9 +38,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by Anton on 07.03.2016.
  */
 public class FromFragment extends Fragment{
-    private GoogleApiClient googleApiClient;
     private AutoCompleteAdapter adapter;
     private AutoCompleteTextView autoCompleteTextView;
+    private GoogleMap googleMap;
 
     @Nullable
     @Override
@@ -49,8 +49,35 @@ public class FromFragment extends Fragment{
         adapter = new AutoCompleteAdapter(getContext(), 0, null);
         autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.auto_complete_tv_from);
         autoCompleteTextView.setAdapter(adapter);
+        createMapView();
         return view;
     }
 
+    private void createMapView() {
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction fragmentTransaction =
+                getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.my_container_from, mapFragment);
+        fragmentTransaction.commit();
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                FromFragment.this.googleMap = googleMap;
+                moveToPosition(new LatLng(55.75222, 37.61556), 10);
+            }
+        });
+    }
+
+    private void moveToPosition(LatLng latLng, int zoom) {
+        if (googleMap != null) {
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng)
+                    .zoom(zoom)
+                    .tilt(20)
+                    .build();
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+            googleMap.animateCamera(cameraUpdate);
+        }
+    }
 
 }
