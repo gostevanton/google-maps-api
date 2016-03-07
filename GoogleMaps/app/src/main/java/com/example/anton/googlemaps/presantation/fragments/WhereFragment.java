@@ -85,8 +85,7 @@ public class WhereFragment extends Fragment implements WhereView{
         ((FabProvider) getActivity()).getFloatingActionButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MapActivity.class);
-                startActivity(intent);
+               whereFragmentPresenter.startMapActivity(getContext());
             }
         });
     }
