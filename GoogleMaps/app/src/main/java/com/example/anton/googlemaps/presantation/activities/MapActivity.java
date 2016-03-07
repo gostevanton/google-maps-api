@@ -36,12 +36,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
         mapActivityPresenter = new MapActivityPresenterImpl(this);
         textView = (TextView) findViewById(R.id.textView);
+        createMap();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        createMap();
+
     }
 
     private void createMap() {
@@ -66,8 +67,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void moveCamera(LatLngBounds latLngBounds) {
-        int size = getResources().getDisplayMetrics().widthPixels;
-        CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, size, size, 50);
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, width, height, 100);
         googleMap.moveCamera(track);
     }
 
