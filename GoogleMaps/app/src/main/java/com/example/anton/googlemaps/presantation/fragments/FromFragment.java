@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class FromFragment extends Fragment implements FromView {
 
     @Nullable
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_from, null);
         fromFragmentPresenter = new FromFragmentPresenterImpl(this);
@@ -70,7 +70,7 @@ public class FromFragment extends Fragment implements FromView {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 FromFragment.this.googleMap = googleMap;
-                fromFragmentPresenter.moveToFirstPosition();
+                fromFragmentPresenter.moveToLastPosition();
             }
         });
     }

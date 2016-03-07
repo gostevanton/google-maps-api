@@ -1,5 +1,7 @@
 package com.example.anton.googlemaps.presantation.presenters;
 
+import android.util.Log;
+
 import com.example.anton.googlemaps.domain.Points;
 import com.example.anton.googlemaps.domain.adapters.AutoCompleteAdapter;
 import com.example.anton.googlemaps.presantation.view.FromView;
@@ -19,11 +21,6 @@ public class FromFragmentPresenterImpl implements FromFragmentPresenter {
 
     public FromFragmentPresenterImpl(FromView fromView) {
         this.fromView = fromView;
-    }
-
-    @Override
-    public void moveToFirstPosition() {
-        fromView.moveToPosition(new LatLng(55.75222, 37.61556), 10);
     }
 
     @Override
@@ -53,4 +50,15 @@ public class FromFragmentPresenterImpl implements FromFragmentPresenter {
             places.release();
         }
     };
+
+    @Override
+    public void moveToLastPosition() {
+        LatLng latLng = Points.getInstance().getFromCoordinates();
+        if (latLng != null) {
+            fromView.moveToPosition(latLng, 15);
+            fromView.addMarker(latLng);
+        } else {
+            fromView.moveToPosition(new LatLng(55.75222, 37.61556), 10);
+        }
+    }
 }
