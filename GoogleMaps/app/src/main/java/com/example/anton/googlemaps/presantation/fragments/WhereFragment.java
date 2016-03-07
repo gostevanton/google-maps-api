@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.anton.googlemaps.R;
 import com.example.anton.googlemaps.domain.adapters.AutoCompleteAdapter;
+import com.example.anton.googlemaps.presantation.presenters.WhereFragmentPresenter;
+import com.example.anton.googlemaps.presantation.presenters.WhereFragmentPresenterImpl;
+import com.example.anton.googlemaps.presantation.view.WhereView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -27,10 +30,11 @@ import com.google.android.gms.maps.model.LatLngBounds;
 /**
  * Created by Anton on 07.03.2016.
  */
-public class WhereFragment extends Fragment{
+public class WhereFragment extends Fragment implements WhereView{
     private AutoCompleteAdapter adapter;
     private AutoCompleteTextView autoCompleteTextView;
     private GoogleMap googleMap;
+    private WhereFragmentPresenter whereFragmentPresenter;
 
 
     @Override
@@ -39,6 +43,7 @@ public class WhereFragment extends Fragment{
         adapter = new AutoCompleteAdapter(getContext(), 1, null);
         autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.auto_complete_tv_where);
         autoCompleteTextView.setAdapter(adapter);
+        whereFragmentPresenter = new WhereFragmentPresenterImpl(this);
         createMapView();
         return view;
     }
@@ -53,12 +58,13 @@ public class WhereFragment extends Fragment{
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 WhereFragment.this.googleMap = googleMap;
-                moveToPosition(new LatLng(55.75222, 37.61556), 10);
+                whereFragmentPresenter.moveToFirstPosition();
             }
         });
     }
 
-    private void moveToPosition(LatLng latLng, int zoom) {
+    @Override
+    public void moveToPosition(LatLng latLng, int zoom) {
         if (googleMap != null) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLng)
