@@ -25,6 +25,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
+
         <activity
             android:name=".presantation.activities.SplashScreen"
             android:label="@string/app_name"
@@ -35,8 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presantation.activities.MainActivity"/>
-
+        <activity android:name=".presantation.activities.MainActivity" />
+        <activity android:name=".presantation.activities.MapActivity" />
 
     </application>
 
