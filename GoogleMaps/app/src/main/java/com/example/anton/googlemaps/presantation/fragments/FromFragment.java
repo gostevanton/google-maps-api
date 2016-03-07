@@ -37,31 +37,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by Anton on 07.03.2016.
  */
-public class FromFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+public class FromFragment extends Fragment{
     private GoogleApiClient googleApiClient;
     private AutoCompleteAdapter adapter;
-
-    private static final LatLngBounds BOUNDS_GREATER_MOSCOW = new LatLngBounds(
-            new LatLng(54, 37), new LatLng(56, 38));
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_from, null);
-        googleApiClient = new GoogleApiClient.Builder(getContext())
-                .enableAutoManage(getActivity(), 0, this)
-                .addApi(Places.GEO_DATA_API)
-                .build();
-        adapter = new AutoCompleteAdapter(getContext(), googleApiClient, BOUNDS_GREATER_MOSCOW, null);
-
-        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.auto_complete_tv_from);
+        adapter = new AutoCompleteAdapter(getContext(), 0, null);
+        autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.auto_complete_tv_from);
         autoCompleteTextView.setAdapter(adapter);
         return view;
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Toast.makeText(getContext(), "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
-                Toast.LENGTH_SHORT).show();
-    }
+
 }
