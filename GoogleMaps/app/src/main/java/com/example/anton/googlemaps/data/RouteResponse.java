@@ -9,6 +9,7 @@ public class RouteResponse {
     public List<Route> routes;
 
     public String getPoints() {
+        if (this.routes.size() ==0) return null;
         return this.routes.get(0).overview_polyline.points;
     }
 

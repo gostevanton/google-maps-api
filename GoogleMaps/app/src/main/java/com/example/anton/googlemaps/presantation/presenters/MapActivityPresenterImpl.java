@@ -6,11 +6,14 @@ import com.example.anton.googlemaps.data.RequestMaker;
 import com.example.anton.googlemaps.domain.events.GetRouteResponse;
 import com.example.anton.googlemaps.presantation.view.MapView;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.PolyUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.greenrobot.eventbus.util.AsyncExecutor;
+
+import java.util.List;
 
 /**
  * Created by Anton on 07.03.2016.
@@ -32,7 +35,7 @@ public class MapActivityPresenterImpl implements MapActivityPresenter {
         asyncExecutor.execute(new AsyncExecutor.RunnableEx() {
             @Override
             public void run() throws Exception {
-                new RequestMaker().getRouteResponse(new LatLng(30, 46), new LatLng(31, 46));
+                new RequestMaker().getRouteResponse(new LatLng(57, 37), new LatLng(57, 36));
             }
         });
     }
@@ -40,5 +43,11 @@ public class MapActivityPresenterImpl implements MapActivityPresenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetRouteResponse(GetRouteResponse response) {
         Log.d("My App", "onGetRouteResponce");
+        if (response.routeResponse.getPoints() != null) {
+            List<LatLng> points = PolyUtil.decode(response.routeResponse.getPoints());
+            mapView.direction(points);
+        } else {
+            Log.d("My App", "Error");
+        }
     }
 }
