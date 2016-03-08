@@ -8,7 +8,7 @@ import com.example.anton.googlemaps.domain.adapters.AutoCompleteAdapter;
  * Created by Anton on 07.03.2016.
  */
 public interface WhereFragmentPresenter {
-    void moveToFirstPosition();
+    void moveToLastPosition();
 
     void startMapActivity(Context context);
 

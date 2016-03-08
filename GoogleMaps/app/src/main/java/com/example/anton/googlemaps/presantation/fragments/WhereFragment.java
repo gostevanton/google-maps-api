@@ -1,7 +1,6 @@
 package com.example.anton.googlemaps.presantation.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,7 +13,6 @@ import android.widget.AutoCompleteTextView;
 import com.example.anton.googlemaps.R;
 import com.example.anton.googlemaps.domain.adapters.AutoCompleteAdapter;
 import com.example.anton.googlemaps.domain.interfaces.FabProvider;
-import com.example.anton.googlemaps.presantation.activities.MapActivity;
 import com.example.anton.googlemaps.presantation.presenters.WhereFragmentPresenter;
 import com.example.anton.googlemaps.presantation.presenters.WhereFragmentPresenterImpl;
 import com.example.anton.googlemaps.presantation.view.WhereView;
@@ -71,7 +69,7 @@ public class WhereFragment extends Fragment implements WhereView{
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 WhereFragment.this.googleMap = googleMap;
-                whereFragmentPresenter.moveToFirstPosition();
+                whereFragmentPresenter.moveToLastPosition();
             }
         });
     }

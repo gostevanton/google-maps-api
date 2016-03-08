@@ -27,8 +27,14 @@ public class WhereFragmentPresenterImpl implements WhereFragmentPresenter {
     }
 
     @Override
-    public void moveToFirstPosition() {
-        whereView.moveToPosition(new LatLng(55.75222, 37.61556), 10);
+    public void moveToLastPosition() {
+        LatLng latLng = Points.getInstance().getToCoordinates();
+        if (latLng != null) {
+            whereView.moveToPosition(latLng, 15);
+            whereView.addMarker(latLng);
+        } else {
+            whereView.moveToPosition(new LatLng(55.75222, 37.61556), 10);
+        }
     }
 
     @Override
