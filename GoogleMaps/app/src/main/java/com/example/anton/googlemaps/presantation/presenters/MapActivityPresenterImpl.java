@@ -1,7 +1,10 @@
 package com.example.anton.googlemaps.presantation.presenters;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -32,6 +35,7 @@ import java.util.List;
  * Created by Anton on 07.03.2016.
  */
 public class MapActivityPresenterImpl implements MapActivityPresenter {
+    private static final int REQUEST_LOCATION = 2;
     private MapView mapView;
     private AsyncExecutor asyncExecutor;
     private EventBus eventBus;
@@ -69,9 +73,26 @@ public class MapActivityPresenterImpl implements MapActivityPresenter {
     }
 
     @Override
-    public void getMyLocation(Context context) {
+    public void getMyLocation(final Context context) {
         locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Разрешения нужны?")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .create()
+                        .show();
+            }
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, listener);
